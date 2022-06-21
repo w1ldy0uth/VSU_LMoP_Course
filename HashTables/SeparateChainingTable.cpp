@@ -51,8 +51,15 @@ void SeparateChainingTable::insert(TKey key, TValue value) {
 	node->key = key;
 	node->value = value;
 	node->next = cells[index];
-
-	cells[index] = node;
+	
+	if (cells[index] == nullptr)
+		cells[index] = node;
+	else {
+		Node* p = cells[index];
+		while(p->next != nullptr)
+			p = p->next;
+		p->next = node;
+	}
 
 	size++;
 }
